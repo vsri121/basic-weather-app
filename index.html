@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="index.css">
+    <title>Simple Weather App</title>
+</head>
+<body>
+    <div class="card">
+        <div class="search">
+            <input type="text" placeholder="Enter City Name" spellcheck="false">
+            <button><img src="img/search.png" alt="search_icon"></button>
+        </div>
+        <div class="weather">
+            <img src="img/rain.png" class="weather-icon">
+            <h1 class="temp">25°C</h1>
+            <h2 class="city">Hyderabad</h2>
+        </div>
+    </div>
+    <script>
+        const apikey = "50ed85f2552c7ef8fb8ed061faa73c88";
+        const apiurl = "https://api.openweathermap.org/data/2.5/weather?&units=metric&q=";
+
+        const searchBox = document.querySelector(".search input");
+        const searchbtn = document.querySelector(".search button");
+        const weathericon = document.querySelector(".weather-icon");
+
+        async function checkWeather(city) {
+            const response = await fetch(apiurl + city + `&appid=${apikey}`);
+            var data = await response.json();
+
+            console.log(data);
+
+            document.querySelector(".city").innerHTML = data.name;
+            document.querySelector(".temp").innerHTML = data.main.temp + "°C";
+
+            if(data.weather[0].main == "Clouds"){
+                weathericon.src = "img/clouds.png";
+            }
+
+            if(data.weather[0].main == "Clear"){
+                weathericon.src = "img/clear.png";
+            }
+
+            if(data.weather[0].main == "Drizzle"){
+                weathericon.src = "img/drizzle.png";
+            }
+
+            if(data.weather[0].main == "Mist"){
+                weathericon.src = "img/mist.png";
+            }
+
+            if(data.weather[0].main == "Snow"){
+                weathericon.src = "img/snow.png";
+            }
+        }
+
+        searchbtn.addEventListener("click", ()=>{
+            checkWeather(searchBox.value);
+        })
+
+        async function getWeatherByLocation() {
+        if (navigator.geolocation) {
+            navigator.geolocation.getCurrentPosition(async (position) => {
+                const lat = position.coords.latitude;
+                const lon = position.coords.longitude;
+                const locationWeatherApi = `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&units=metric&appid=${apikey}`;
+                
+                try {
+                    const response = await fetch(locationWeatherApi);
+                    if (!response.ok) throw new Error("Unable to fetch location weather");
+                    const data = await response.json();
+
+                    console.log(data);
+
+                    document.querySelector(".city").innerHTML = data.name;
+                    document.querySelector(".temp").innerHTML = data.main.temp + "°C";
+
+                    if (data.weather[0].main == "Clouds") {
+                        weathericon.src = "img/clouds.png";
+                    } else if (data.weather[0].main == "Clear") {
+                        weathericon.src = "img/clear.png";
+                    } else if (data.weather[0].main == "Drizzle") {
+                        weathericon.src = "img/drizzle.png";
+                    } else if (data.weather[0].main == "Mist") {
+                        weathericon.src = "img/mist.png";
+                    } else if (data.weather[0].main == "Snow") {
+                        weathericon.src = "img/snow.png";
+                    }
+                } catch (error) {
+                    alert("Unable to fetch weather data for your location. " + error.message);
+                }
+            }, (error) => {
+                alert("Geolocation access denied. Please search manually.");
+            });
+        } else {
+            alert("Geolocation is not supported by your browser.");
+        }
+    }
+
+
+        checkWeather();
+
+        window.onload = getWeatherByLocation;
+    </script>
+</body>
+</html>
