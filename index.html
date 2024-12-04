@@ -10,10 +10,10 @@
     <div class="card">
         <div class="search">
             <input type="text" placeholder="Enter City Name" spellcheck="false">
-            <button><img src="img/search.png" alt="search_icon"></button>
+            <button><img src="search.png" alt="search_icon"></button>
         </div>
         <div class="weather">
-            <img src="img/rain.png" class="weather-icon">
+            <img src="rain.png" class="weather-icon">
             <h1 class="temp">25°C</h1>
             <h2 class="city">Hyderabad</h2>
         </div>
@@ -36,23 +36,23 @@
             document.querySelector(".temp").innerHTML = data.main.temp + "°C";
 
             if(data.weather[0].main == "Clouds"){
-                weathericon.src = "img/clouds.png";
+                weathericon.src = "clouds.png";
             }
 
             if(data.weather[0].main == "Clear"){
-                weathericon.src = "img/clear.png";
+                weathericon.src = "clear.png";
             }
 
             if(data.weather[0].main == "Drizzle"){
-                weathericon.src = "img/drizzle.png";
+                weathericon.src = "drizzle.png";
             }
 
             if(data.weather[0].main == "Mist"){
-                weathericon.src = "img/mist.png";
+                weathericon.src = "mist.png";
             }
 
             if(data.weather[0].main == "Snow"){
-                weathericon.src = "img/snow.png";
+                weathericon.src = "snow.png";
             }
         }
 
@@ -78,15 +78,15 @@
                     document.querySelector(".temp").innerHTML = data.main.temp + "°C";
 
                     if (data.weather[0].main == "Clouds") {
-                        weathericon.src = "img/clouds.png";
+                        weathericon.src = "clouds.png";
                     } else if (data.weather[0].main == "Clear") {
-                        weathericon.src = "img/clear.png";
+                        weathericon.src = "clear.png";
                     } else if (data.weather[0].main == "Drizzle") {
-                        weathericon.src = "img/drizzle.png";
+                        weathericon.src = "drizzle.png";
                     } else if (data.weather[0].main == "Mist") {
-                        weathericon.src = "img/mist.png";
+                        weathericon.src = "mist.png";
                     } else if (data.weather[0].main == "Snow") {
-                        weathericon.src = "img/snow.png";
+                        weathericon.src = "snow.png";
                     }
                 } catch (error) {
                     alert("Unable to fetch weather data for your location. " + error.message);
